@@ -59,7 +59,6 @@ app.post('/login', (req, res) => {
         res.send('login unsuccessful')
     }
 
-    // 1. send them to a dashboard
     // 2. remember logged in
 
 
