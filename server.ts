@@ -1,5 +1,6 @@
 import express, { Request } from "express";
 import cookieParser from 'cookie-parser';
+import { isAuthed } from "./auth";
 
 const app = express()
 // what does this do? 
@@ -31,12 +32,7 @@ app.get('/', (req, res) => {
 });
 
 
-export function isAuthed(req: Request) {
-    if (req.cookies.isLoggedIn === "true") {
-        return true;
-    }
-    return false;
-}
+
 
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/static/login.html')
