@@ -1,10 +1,14 @@
-import express from "express";
+import express, { Request } from "express";
+import cookieParser from 'cookie-parser';
+import { isAuthed } from "./auth";
 
 const app = express()
 // what does this do? 
 // app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(express.json())
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser());
+
 
 // app.use(bodyParser.json())
 
@@ -29,14 +33,6 @@ app.get('/', (req, res) => {
 
 
 
-app.post('/banana', (req, res) => {
-    console.log(req.body.user)
-    console.log(req.body.banana)
-    res.send(req.body.user)
-    res.send(req.body.banana)
-})
-
-
 
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/static/login.html')
@@ -53,12 +49,31 @@ app.post('/login', (req, res) => {
 
     if (users.find((user) => user.email === reqEmail && user.password === reqPassword
     )) {
-        res.send('login successful')
+        res.cookie('isLoggedIn', true)
+        res.redirect('/dashboard')
     }
     else {
         res.send('login unsuccessful')
     }
 
+})
+
+app.get('/dashboard', (req, res) => {
+    if (!isAuthed(req)) {
+        res.redirect('/login')
+    }
+    res.sendFile(__dirname + '/static/dashboard.html')
+
+
+})
+
+app.get('/logout', (req, res) => {
+    res.clearCookie("isLoggedIn")
+    res.redirect('/login')
+})
+
+app.get('/signup', (req, res) => {
+    res.sendFile(__dirname + '/static/signup.html')
 
 })
 
