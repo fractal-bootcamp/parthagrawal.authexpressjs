@@ -76,6 +76,11 @@ app.get('/logout', (req, res) => {
     res.redirect('/login')
 })
 
+app.get('/signup', (req, res) => {
+    res.sendFile(__dirname + '/static/signup.html')
+
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
