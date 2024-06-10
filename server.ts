@@ -36,11 +36,19 @@ app.post('/banana', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-    const email = req.body.username
-    const password = req.body.password
+    const reqEmail = req.body.email
+    const reqPassword = req.body.password
 
-    console.log(email, password)
-    res.send('login successful')
+    console.log(reqEmail, reqPassword)
+    debugger;
+
+    if (users.find((user) => user.email === reqEmail && user.password === reqPassword
+    )) {
+        res.send('login successful')
+    }
+    else {
+        res.send('login unsuccessful')
+    }
 
 
 })
