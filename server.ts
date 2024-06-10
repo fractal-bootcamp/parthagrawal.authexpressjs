@@ -1,10 +1,13 @@
 import express from "express";
+import cookieParser from 'cookie-parser';
 
 const app = express()
 // what does this do? 
 // app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(express.json())
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser());
+
 
 // app.use(bodyParser.json())
 
@@ -53,6 +56,7 @@ app.post('/login', (req, res) => {
 
     if (users.find((user) => user.email === reqEmail && user.password === reqPassword
     )) {
+        res.cookie('isLoggedIn', true)
         res.send('login successful')
     }
     else {
