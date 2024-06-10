@@ -60,11 +60,12 @@ app.post('/login', (req, res) => {
         res.send('login unsuccessful')
     }
 
-
-
 })
 
 app.get('/dashboard', (req, res) => {
+    if (!isAuthed(req)) {
+        res.redirect('/login')
+    }
     res.sendFile(__dirname + '/static/dashboard.html')
 
 
