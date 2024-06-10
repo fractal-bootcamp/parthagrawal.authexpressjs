@@ -53,12 +53,20 @@ app.post('/login', (req, res) => {
 
     if (users.find((user) => user.email === reqEmail && user.password === reqPassword
     )) {
-        res.send('login successful')
+        res.redirect('/dashboard')
     }
     else {
         res.send('login unsuccessful')
     }
 
+    // 1. send them to a dashboard
+    // 2. remember logged in
+
+
+})
+
+app.get('/dashboard', (req, res) => {
+    res.send('<h2>login successful: welcome to your dashboard</h2>')
 
 })
 
