@@ -70,6 +70,12 @@ app.get('/dashboard', (req, res) => {
 
 
 })
+
+app.get('/logout', (req, res) => {
+    res.clearCookie("isLoggedIn")
+    res.redirect('/login')
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
