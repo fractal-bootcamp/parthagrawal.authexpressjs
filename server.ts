@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request } from "express";
 import cookieParser from 'cookie-parser';
 
 const app = express()
@@ -31,15 +31,12 @@ app.get('/', (req, res) => {
 });
 
 
-
-app.post('/banana', (req, res) => {
-    console.log(req.body.user)
-    console.log(req.body.banana)
-    res.send(req.body.user)
-    res.send(req.body.banana)
-})
-
-
+export function isAuthed(req: Request) {
+    if (req.cookies.isLoggedIn === "true") {
+        return true;
+    }
+    return false;
+}
 
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/static/login.html')
@@ -57,15 +54,21 @@ app.post('/login', (req, res) => {
     if (users.find((user) => user.email === reqEmail && user.password === reqPassword
     )) {
         res.cookie('isLoggedIn', true)
-        res.send('login successful')
+        res.redirect('/dashboard')
     }
     else {
         res.send('login unsuccessful')
     }
 
 
+
 })
 
+app.get('/dashboard', (req, res) => {
+    res.sendFile(__dirname + '/static/dashboard.html')
+
+
+})
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
