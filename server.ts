@@ -1,11 +1,13 @@
 import express from "express";
+import cors from 'cors';
 
 const app = express()
 // what does this do? 
 // app.use(bodyParser.urlencoded({ extended: true }))
 // app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
+app.use(express.json())
+app.use(cors())
 // app.use(bodyParser.json())
 
 const port = 5001
@@ -29,14 +31,6 @@ app.get('/', (req, res) => {
 
 
 
-app.post('/banana', (req, res) => {
-    console.log(req.body.user)
-    console.log(req.body.banana)
-    res.send(req.body.user)
-    res.send(req.body.banana)
-})
-
-
 
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/static/login.html')
@@ -44,6 +38,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
 
+    console.log(req)
     console.log(req.body)
     console.log(req.body)
     const reqEmail = req.body.email
@@ -56,7 +51,7 @@ app.post('/login', (req, res) => {
         res.redirect('/dashboard')
     }
     else {
-        res.send('login unsuccessful')
+        res.status(400).json({ error: 'login unsuccessful' })
     }
 
     // 2. remember logged in
