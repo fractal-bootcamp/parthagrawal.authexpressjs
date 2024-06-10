@@ -1,15 +1,14 @@
-import bodyParser from "body-parser";
 import express from "express";
-// QUESTION - diff between above statement?
-// import { Express } from "express";
 
 const app = express()
 // what does this do? 
 // app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
 
-const port = 5001
+const port = 3000
 
 const users = [
     {
@@ -25,8 +24,10 @@ const users = [
 ]
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+    res.send('Hello world');
+});
+
+
 
 app.post('/banana', (req, res) => {
     console.log(req.body.user)
@@ -35,12 +36,20 @@ app.post('/banana', (req, res) => {
     res.send(req.body.banana)
 })
 
+
+
+app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/static/login.html')
+})
+
 app.post('/login', (req, res) => {
+
+    console.log(req.body)
+    console.log(req.body)
     const reqEmail = req.body.email
     const reqPassword = req.body.password
 
     console.log(reqEmail, reqPassword)
-    debugger;
 
     if (users.find((user) => user.email === reqEmail && user.password === reqPassword
     )) {
