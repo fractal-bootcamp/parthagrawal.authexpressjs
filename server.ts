@@ -31,10 +31,18 @@ app.get('/', (req, res) => {
 app.post('/banana', (req, res) => {
     console.log(req.body.user)
     console.log(req.body.banana)
+    res.send(req.body.user)
+    res.send(req.body.banana)
 })
 
-app.get('/login', (req, res) => {
-    res.send('<input type="text" />')
+app.post('/login', (req, res) => {
+    const email = req.body.username
+    const password = req.body.password
+
+    console.log(email, password)
+    res.send('login successful')
+
+
 })
 
 app.listen(port, () => {
